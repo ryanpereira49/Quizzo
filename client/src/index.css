@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Backgrounds */
+
+.bg-questionnaire {
+    @apply h-screen;
+    background: linear-gradient(to bottom,
+            #FFFFFF 2%,
+            #E5F5AE 52%,
+            #D3ACED 71%,
+            #AB1BEC 100%);
+}
+
+.bg-startPage {
+    @apply h-screen;
+    background: linear-gradient(to bottom,
+            #FFFFFF 26%,
+            #E5F5AE 50%,
+            #A6C153 100%);
+}
+
+.bg-categoryPage {
+    @apply h-screen;
+    background: linear-gradient(to bottom,
+            #FFFFFF 5%,
+            #E5F5AE 20%,
+            #A6C153 100%);
+}
+
+.bg-finalPage {
+    @apply h-screen;
+    background: linear-gradient(to bottom,
+            #FFFFFF 0%,
+            #E5F5AE 26%,
+            #D3ACED 78%,
+            #AB1BEC 100%);
+}
+
+.bg-resultHigh {
+    @apply h-screen;
+    background: linear-gradient(to bottom,
+            #FFFFFF 0%,
+            #E5F5AE 26%,
+            #D3ACED 85%,
+            #AB1BEC 100%);
+}
+
+.bg-resultLow {
+    @apply h-screen;
+    background: linear-gradient(to bottom,
+            #FFFFFF 0%,
+            #E5F5AE 26%,
+            #D3ACED 50%,
+            #AB1BEC 100%);
+}
+
+.bg-actionButton {
+    @apply bg-gradient-to-br from-[#623878] to-[#E3C4F9];
+    background: linear-gradient(to bottom,
+            #623878 0%,
+            #AB1BEC 45%,
+            #E3C4F9 87%);
+}
+
+
+
+/* Layout */
+
+html,
+body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
