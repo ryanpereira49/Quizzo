@@ -83,7 +83,8 @@ const check = async (req, res) => {
 
   try {
     //Check if quiz exists in Redis cache
-    const cachedQuiz = await redisClient.get(`quiz:${quizId}`);
+    const cachedQuiz = false//await redisClient.get(`quiz:${quizId}`);
+    if (process.env.NODE_ENV !== 'development') {}
 
     let quiz;
 
@@ -96,11 +97,16 @@ const check = async (req, res) => {
       if (!quiz) {
         return res.status(404).json({ error: "Quiz not found" });
       }
-      // Store the quiz in Redis with 30-minute expiration
-      await redisClient.set(`quiz:${quizId}`, JSON.stringify(quiz), {
-        EX: 1800, // Expiry set to 1800 seconds (30 minutes)
-      });
+      
+      // Run only in non-development enviornment
+      if (process.env.NODE_ENV !== 'development') {
+        // Store the quiz in Redis with 30-minute expiration
+        await redisClient.set(`quiz:${quizId}`, JSON.stringify(quiz), {
+          EX: 1800, // Expiry set to 1800 seconds (30 minutes)
+        });
+      }
     }
+    
 
     // Validate answer
     if (quiz) {
