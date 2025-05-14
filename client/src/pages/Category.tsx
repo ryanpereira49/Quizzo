@@ -68,7 +68,7 @@ export default function Category() {
       ))}
       </div>
       <div className='w-full flex justify-center '>
-        <ActionButton onClick={() => navigate("/category")} text="Select a category" cstyles='w-full py-6 md:py-8 md:w-1/4' />
+        <ActionButton onClick={() => navigate("/category")} text="CI/CD Test" cstyles='w-full py-6 md:py-8 md:w-1/4' />
       </div>
     </div>
   )
