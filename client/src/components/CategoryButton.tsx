@@ -23,7 +23,7 @@ const CategoryButton: React.FC<CategoryButtonProps> = ({ qid, catno }) => {
 
   return (
     <div>
-      <button className=' w-40 h-40 flex items-center justify-center rounded-md' onClick={() => { navigate('/quiz', { state: { id: qid } }) }}>
+      <button className=' w-32 h-32 md:w-40 md:h-40 flex items-center justify-center rounded-md' onClick={() => { navigate('/quiz', { state: { id: qid } }) }}>
         <img src={catImg[catno]} />
       </button>
     </div>
