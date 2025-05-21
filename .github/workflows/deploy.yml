@@ -19,6 +19,11 @@ jobs:
           cd /root/Quizzo/
           git reset --hard
           git pull origin main
-          cd client && npm install && npm run build
-          cd ../server && npm install
+          
+          cd client
+          rm -rf dist
+          npm ci
+          npm run build
+          
+          cd ../server && npm ci
           pm2 restart ecosystem.config.js --env production
