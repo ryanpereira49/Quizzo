@@ -5,6 +5,7 @@ import Quiz from './Quiz'
 import ActionButton from '../components/ActionButton'
 import LogoMain from '../components/LogoMain'
 import CategoryButton from '../components/CategoryButton'
+import Container from '../components/Container'
 
 interface Option {
   _id: string,
@@ -58,7 +59,21 @@ export default function Category() {
   if (error) return <p>Error: {error}</p>
 
   return (
-    <div className='bg-categoryPage flex flex-col items-center justify-center px-6'>
+    <div className='bg-image flex flex-col items-center justify-center'>
+      <Container className='gap-y-6'>
+        <LogoMain cstyles='h-32 md:h-44' />
+        <div className='grid grid-cols-2 gap-4 mb-8 md:grid-cols-4 md:gap-4 md:content-center'>
+          {data?.map((quiz, index) => (
+            <CategoryButton key={quiz._id} qid={quiz._id} catno={index.toString()} />
+          ))}
+        </div>
+      </Container>
+    </div>
+  )
+}
+
+/**
+ <div className='bg-image flex flex-col items-center justify-center px-6'>
       <div className='flex items-center  justify-center mb-8'>
         <LogoMain cstyles='h-32 md:h-44' />
       </div>
@@ -71,5 +86,4 @@ export default function Category() {
         <ActionButton onClick={() => navigate("/category")} text="Select a category" cstyles='w-full py-6 md:py-8 md:w-1/4' />
       </div>
     </div>
-  )
-}
+ */

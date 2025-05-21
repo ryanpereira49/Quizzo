@@ -1,14 +1,25 @@
 import { useNavigate } from 'react-router-dom'
-import ActionButton from '../components/ActionButton'
 import LogoMain from '../components/LogoMain'
-import FooterCustom from '../components/FooterCustom'
+import Container from '../components/Container'
+import ButtonGlass from '../components/ButtonGlass'
+//import FooterCustom from '../components/FooterCustom'
+//import ActionButton from '../components/ActionButton'
 
 export default function Home() {
-//"248" height="142"
   const navigate = useNavigate()
 
   return (
-    <div className='bg-startPage flex flex-col items-center '>
+    <div className='bg-image flex flex-col items-center justify-center'>
+      <Container className='gap-y-8 md:gap-y-6'>
+        <LogoMain cstyles='h-44 md:h-64' />
+        <ButtonGlass onClick={() => navigate("/category")}>Let's Start</ButtonGlass>
+      </Container>
+    </div>
+  )
+}
+
+/*
+<div className='bg-image flex flex-col items-center '>
         <div className='flex flex-grow items-center justify-center'>
           <LogoMain cstyles='h-44 md:h-64' />
         </div>
@@ -17,5 +28,5 @@ export default function Home() {
         </div>
         <FooterCustom/>
     </div>
-  )
-}
+
+*/
