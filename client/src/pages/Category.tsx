@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Quiz from './Quiz'
-import ActionButton from '../components/ActionButton'
 import LogoMain from '../components/LogoMain'
 import CategoryButton from '../components/CategoryButton'
 import Container from '../components/Container'
+//import ActionButton from '../components/ActionButton'
+//import { useNavigate } from 'react-router-dom'
 
 interface Option {
   _id: string,
@@ -35,7 +35,7 @@ export default function Category() {
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
 
-  const navigate = useNavigate()
+  //const navigate = useNavigate()
 
   useEffect(() => {
     const getQuizes = async () => {
