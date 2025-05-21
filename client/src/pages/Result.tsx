@@ -29,7 +29,7 @@ export default function Result() {
     }
 
     return (
-        <div className='bg-finalPage h-svh flex flex-col justify-normal p-6'>
+        <div className='bg-image h-svh flex flex-col justify-normal p-6'>
             <header className='flex flex-col items-center md:block'>
                 <LogoMain cstyles='h-32 md:hidden' />
                 <LogoBig cstyles='hidden md:block' />

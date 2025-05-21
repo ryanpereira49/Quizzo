@@ -137,7 +137,7 @@ export default function Quiz() {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className='bg-questionnaire h-svh p-6'>
+    <div className='bg-image h-svh p-6'>
       <header>
       <LogoOnly cstyles='h-20 md:hidden' />
       <LogoBig cstyles='hidden md:block' />
