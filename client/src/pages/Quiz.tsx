@@ -7,6 +7,8 @@ import ProgressBar from '../components/ProgressBar';
 import PreviousButtonImg from '../assets/PreviousButton.svg'
 import NextButtonImg from '../assets/NextButton.svg'
 import LogoBig from '../components/LogoBig';
+import Container from '../components/Container';
+import ButtonGlass from '../components/ButtonGlass';
 
 interface Option {
   oid: string;
@@ -137,7 +139,62 @@ export default function Quiz() {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className='bg-image h-svh p-6'>
+    <div className='bg-image p-6 flex flex-col gap-y-8'>
+      <header>
+      <LogoOnly cstyles='h-20 md:hidden' />
+      <LogoBig cstyles='hidden md:block' />
+      </header>
+        <ProgressBar pindex={index+1} plength={questions.length}/>
+      <div className='flex grow items-center justify-center'>
+        <Container className='flex flex-col gap-y-6'>
+          <h3 className='glassmorph-blur text-white p-2'>{questions[index].qtext}</h3>
+          {
+            questions[index].isSubmit ? (
+              <div className='md:grid md:grid-cols-2 md:gap-4'>
+                {questions[index].options.map((option) => (
+                  <div className={questions[index].correct === option.oid ?
+                    'glassmorph-green flex p-2 my-3 md:my-0'
+                    : option.oid === questions[index].submitted && questions[index].submitted != questions[index].correct
+                      ? 'glassmorph-red flex p-2 my-3 md:my-0'
+                      : 'glassmorph-blur flex p-2 my-3 md:my-0'}
+                    key={option.oid}>
+                    <label className='text-white'>
+                      <input
+                        type='radio'
+                        name='options'
+                        value={option.oid}
+                      />{' '}
+                      {option.otext}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            ) :
+              (
+                <Options options={questions[index].options} onOptionSelect={handleOptionSelect} />
+              )
+
+          }
+          <div id='action-buttons' className='flex items-center justify-between'>
+            <button className='w-14' onClick={handlePrevious} disabled={index === 0}>
+              <img src={PreviousButtonImg} />
+            </button>
+
+            <ButtonGlass disabled={currentSelected===null} onClick={() => { handleSubmit() }}>Submit</ButtonGlass>
+            
+            <button className='w-14' onClick={handleNext} disabled={index === questions.length - 1}>
+              <img src={NextButtonImg} />
+            </button>
+          </div>
+        </Container>
+      </div>
+    </div>
+  )
+}
+
+/*
+ 
+<div className='bg-image h-svh p-6'>
       <header>
       <LogoOnly cstyles='h-20 md:hidden' />
       <LogoBig cstyles='hidden md:block' />
@@ -205,7 +262,8 @@ export default function Quiz() {
       </footer>
     </div>
   );
-}
+
+ */
 
 /**
   
