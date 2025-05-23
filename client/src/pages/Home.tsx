@@ -10,7 +10,7 @@ export default function Home() {
 
   return (
     <div className='bg-image flex flex-col items-center justify-center'>
-      <Container className='gap-y-8 md:gap-y-6'>
+      <Container className='flex flex-col items-center mx-8 gap-y-8 md:gap-y-6'>
         <LogoMain cstyles='h-44 md:h-64' />
         <ButtonGlass onClick={() => navigate("/category")}>Let's Start</ButtonGlass>
       </Container>
