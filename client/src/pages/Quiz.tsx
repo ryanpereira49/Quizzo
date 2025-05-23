@@ -188,7 +188,7 @@ export default function Quiz() {
         ) :
           (
             <div className='self-center my-3'>
-              <button className='bg-[#623878] px-6 py-2 text-white rounded-md' onClick={() => { handleSubmit() }}>Submit</button>
+              <button className='bg-[#623878] disabled:bg-[#d7b1eb] px-6 py-2 text-white rounded-md' disabled={currentSelected===null} onClick={() => { handleSubmit() }}>Submit</button>
             </div>
           )
       }
