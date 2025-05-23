@@ -20,21 +20,21 @@ const Options: React.FC<OptionProps> = ({ options, onOptionSelect }) => {
   }
 
   return (
-    <div className='md:grid md:grid-cols-2'>
-        {options.map((option) => (
-          <div key={option.oid}>
-            <label className='border-2 border-[#94819E] p-2 flex m-3 rounded-md'>
-              <input
-                type='radio'
-                name='options'
-                value={option.oid}
-                onChange={handleChange}
-                checked={selectedOption === option.oid}
-              />{' '}
-              <p className='ml-3'>{option.otext}</p>
-            </label>
-          </div>
-        ))}
+    <div className='md:grid md:grid-cols-2 md:gap-4'>
+      {options.map((option) => (
+        <div key={option.oid}>
+          <label className='glassmorph-blur flex p-2 my-3 md:my-0'>
+            <input
+              type='radio'
+              name='options'
+              value={option.oid}
+              onChange={handleChange}
+              checked={selectedOption === option.oid}
+            />{' '}
+            <p className='ml-3 text-white'>{option.otext}</p>
+          </label>
+        </div>
+      ))}
     </div>
   )
 }
