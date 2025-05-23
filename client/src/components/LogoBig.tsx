@@ -14,7 +14,7 @@ const LogoBig: React.FC<LogoBigProps> = ({ cstyles }) => {
     return (
         <>
             <div className={cstyles}>
-                <div className='flex justify-between items-center border-b-2 border-[#6F8437]'>
+                <div className='flex justify-between items-center border-b-2 border-[#ffffff]'>
                     <img src={logoWord} alt='logoWord' className='h-20' />
                     <button onClick={() => {navigate('/category')}}><img src={logoExit} alt='logoExit' className='size-12' /></button>
                 </div>
