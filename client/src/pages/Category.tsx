@@ -60,7 +60,7 @@ export default function Category() {
 
   return (
     <div className='bg-image flex flex-col items-center justify-center'>
-      <Container className='gap-y-6'>
+      <Container className='flex flex-col items-center mx-8 gap-y-6'>
         <LogoMain cstyles='h-32 md:h-44' />
         <div className='grid grid-cols-2 gap-4 mb-8 md:grid-cols-4 md:gap-4 md:content-center'>
           {data?.map((quiz, index) => (
