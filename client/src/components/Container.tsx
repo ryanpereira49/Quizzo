@@ -7,7 +7,7 @@ type Props = {
 
 const Container: React.FC<Props> = ({children, className}) => {
     return(
-        <div className={`glassmorph p-4 flex flex-col items-center mx-8 ${className}`}>
+        <div className={`glassmorph p-4 ${className}`}>
             {children}
         </div>
     )
