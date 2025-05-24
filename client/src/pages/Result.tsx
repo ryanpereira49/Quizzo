@@ -4,6 +4,10 @@ import LogoBig from '../components/LogoBig'
 import LogoMain from '../components/LogoMain'
 import LogoComplete from '../components/LogoComplete'
 import ProgressBarCircle from '../components/ProgressBarCircle'
+import Container from '../components/Container';
+import ButtonGlass from '../components/ButtonGlass';
+import ContainerGreen from '../components/ContainerGreen'
+import ContainerRed from '../components/ContainerRed'
 
 interface ResultState {
     score: number,
@@ -29,7 +33,49 @@ export default function Result() {
     }
 
     return (
-        <div className='bg-image h-svh flex flex-col justify-normal p-6'>
+        <div className='bg-image p-6 flex flex-col gap-y-8'>
+            <header>
+                <LogoMain cstyles='h-20 md:hidden' />
+                <LogoBig cstyles='hidden md:block' />
+            </header>
+            <div className='flex grow items-center justify-center'>
+                <div className='flex flex-col gap-y-6'>
+                    {showScore? (
+                        result? (
+                            <ContainerGreen className='flex flex-col p-8 items-center gap-y-3'>
+                                <ProgressBarCircle score={score} maxScore={total}/>
+                                <p className='text-white text-2xl font-bold'>Congrulations!</p>
+                                <p className='text-white'>You passed the quiz!</p>
+                                <ButtonGlass onClick={() => { navigate('/category') }}>Home</ButtonGlass>
+                            </ContainerGreen>
+                        ):
+                        (
+                            <ContainerRed className='flex flex-col p-8 items-center gap-y-3'>
+                                <ProgressBarCircle score={score} maxScore={total}/>
+                                <p className='text-white text-2xl font-bold'>Sorry!</p>
+                                <p className='text-white'>You failed the quiz!</p>
+                                <ButtonGlass onClick={() => { navigate('/quiz',{state:{id:quizId}})} }>Try Again</ButtonGlass>
+                            </ContainerRed>
+                        )
+                    ):
+                    (
+                        <Container className='flex flex-col p-8 items-center gap-y-3'>
+                            <LogoComplete cstyles='h-32'/>
+                            <p className='text-white text-2xl font-bold'>Quiz Completed</p>
+                            <p className='text-white'>Check Your Results Here!</p>
+                            <ButtonGlass onClick={() => { handleSubmit() }}>Results</ButtonGlass>
+                        </Container>
+                    )
+
+                    }
+                </div>
+            </div>
+        </div>
+    )
+}
+
+/**
+ <div className='bg-image h-svh flex flex-col justify-normal p-6'>
             <header className='flex flex-col items-center md:block'>
                 <LogoMain cstyles='h-32 md:hidden' />
                 <LogoBig cstyles='hidden md:block' />
@@ -63,5 +109,4 @@ export default function Result() {
                 </div>
             </main>
         </div>
-    )
-}
+ */

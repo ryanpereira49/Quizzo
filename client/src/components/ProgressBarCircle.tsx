@@ -7,7 +7,7 @@ interface ProgressBarCircleProps {
     strokeWidth?: number; // Thickness of the circle
 }
 
-const ProgressBarCircle: React.FC<ProgressBarCircleProps> = ({ score, maxScore, size = 150, strokeWidth = 20 }) => {
+const ProgressBarCircle: React.FC<ProgressBarCircleProps> = ({ score, maxScore, size = 150, strokeWidth = 10 }) => {
 
     const radius = (size - strokeWidth) / 2;
     const circumference = 2 * Math.PI * radius;
@@ -27,7 +27,7 @@ const ProgressBarCircle: React.FC<ProgressBarCircleProps> = ({ score, maxScore, 
                     cy={size / 2}
                     r={radius}
                     fill="transparent"
-                    stroke="#623878"
+                    stroke='#FFFFFF4A'
                     strokeWidth={strokeWidth}
                     
                 />
@@ -37,8 +37,8 @@ const ProgressBarCircle: React.FC<ProgressBarCircleProps> = ({ score, maxScore, 
                     cy={size / 2}
                     r={radius}
                     fill="transparent"
-                    stroke="#D3ACED"
-                    strokeWidth={strokeWidth - 10}
+                    stroke="#FFFFFF"
+                    strokeWidth={strokeWidth}
                     strokeDasharray={circumference}
                     strokeDashoffset={offset}
                     strokeLinecap="round"
@@ -47,7 +47,7 @@ const ProgressBarCircle: React.FC<ProgressBarCircleProps> = ({ score, maxScore, 
             </svg>
             {/* Percentage Display */}
             <div className="absolute text-center">
-                <span className="text-xl font-bold text-[#623878]">{score+'/'+maxScore}</span>
+                <span className="text-xl font-bold text-white">{score+'/'+maxScore}</span>
             </div>
         </div>
     );
