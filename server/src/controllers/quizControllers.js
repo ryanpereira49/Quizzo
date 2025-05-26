@@ -1,6 +1,14 @@
 const { response } = require("express");
 const Quiz = require("../models/Quiz");
 const redisClient = require("../utils/redisClient");
+const axios = require('axios')
+const { GoogleGenerativeAI } = require('@google/generative-ai');
+const { default: getPrompt } = require("../utils/Prompt");
+const { default: validateQuizStructure } = require("../utils/validateQuiz");
+
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
 
 const helloworld = async (req, res) => {
   res.json({message:"Hello World!"})
@@ -84,7 +92,9 @@ const check = async (req, res) => {
   try {
     //Check if quiz exists in Redis cache
     const cachedQuiz = false//await redisClient.get(`quiz:${quizId}`);
-    if (process.env.NODE_ENV !== 'development') {}
+    if (process.env.NODE_ENV !== 'development') {
+      
+    }
 
     let quiz;
 
@@ -124,6 +134,56 @@ const check = async (req, res) => {
   }
 };
 
+const generateQuiz = async (req, res) => {
+  let {topic, quizLength, difficulty} = req.body
+  
+  if (!topic || !quizLength || !difficulty) {
+    return res.status(400).json({ message: 'Missing required fields: topic, quizLength, difficulty' });
+  }
+
+  // Sanitize inputs
+  topic = topic.replace(/[<>\"'&]/g, '').trim();
+  
+  const prompt = getPrompt(topic, quizLength, difficulty)
+
+  try{
+
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-lite' });
+
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+
+    let quizData
+     try {
+     // Clean the text to ensure it's just JSON (remove ```json wrappers if present)
+     const cleanedText = text.replace(/```json\n|\n```/g, '').trim();
+     quizData = JSON.parse(cleanedText);
+   } catch (parseError) {
+     console.error('Failed to parse Gemma JSON:', parseError);
+     console.error('Gemma raw response:', text);
+     return res.status(500).json({ message: 'AI generation error: Invalid JSON format.' });
+   }
+
+    const quizValidation = validateQuizStructure(quizData)
+
+    if(quizValidation !== null){
+      return res.status(400).json({ error: quizValidation });
+    }
+
+    const newQuiz = new Quiz(quizData)
+
+    const savedQuiz = await newQuiz.save();
+    
+
+    return res.json({quizdata: quizData, id: savedQuiz._id})
+
+  }catch (error) {
+    console.error('Error:', error.response?.data || error.message);
+    res.status(500).json({ error: 'Failed to generate quiz.' });
+  }
+}
+
 module.exports = {
   helloworld,
   addQuiz,
@@ -132,4 +192,5 @@ module.exports = {
   updateQuiz,
   deleteQuiz,
   check,
+  generateQuiz,
 };
