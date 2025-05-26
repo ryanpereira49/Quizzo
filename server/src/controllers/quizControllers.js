@@ -3,7 +3,7 @@ const Quiz = require("../models/Quiz");
 const redisClient = require("../utils/redisClient");
 const axios = require('axios')
 const { GoogleGenerativeAI } = require('@google/generative-ai');
-const { default: getPrompt } = require("../utils/Prompt");
+const getPrompt = require('../utils/Prompt');
 const { default: validateQuizStructure } = require("../utils/validateQuiz");
 
 

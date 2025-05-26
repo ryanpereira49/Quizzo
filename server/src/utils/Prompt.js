@@ -1,4 +1,4 @@
-export default function getPrompt(topic, quizLength, difficulty) {
+function getPrompt(topic, quizLength, difficulty) {
 
     const difficultyGuide = `
 The difficulty levels are defined as follows:
@@ -82,3 +82,5 @@ ${difficultyGuide}
 
   return prompt;
 }
+
+module.exports = getPrompt;
