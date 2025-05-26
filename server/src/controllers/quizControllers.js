@@ -4,7 +4,7 @@ const redisClient = require("../utils/redisClient");
 const axios = require('axios')
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const getPrompt = require('../utils/Prompt');
-const { default: validateQuizStructure } = require("../utils/validateQuiz");
+const validateQuizStructure = require("../utils/validateQuiz");
 
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);

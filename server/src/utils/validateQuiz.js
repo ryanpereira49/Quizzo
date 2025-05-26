@@ -1,5 +1,5 @@
 // Validate quiz JSON structure
-export default function validateQuizStructure(quiz)  {
+function validateQuizStructure(quiz)  {
   const requiredFields = ['title', 'description', 'questions', 'answers', 'explanations'];
   
   for (const field of requiredFields) {
@@ -22,3 +22,5 @@ export default function validateQuizStructure(quiz)  {
 
   return null
 }
+
+module.exports = validateQuizStructure
