@@ -1,72 +1,84 @@
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import Quiz from './Quiz'
+import { useState } from 'react'
+//import Quiz from './Quiz'
 import LogoMain from '../components/LogoMain'
-import CategoryButton from '../components/CategoryButton'
 import Container from '../components/Container'
 //import ActionButton from '../components/ActionButton'
-//import { useNavigate } from 'react-router-dom'
-
-interface Option {
-  _id: string,
-  text: string
-}
-
-interface Question {
-  _id: string,
-  questionText: string,
-  options: Option[],
-  correctAnswer: string,
-}
-
-interface Quiz {
-  _id: string,
-  title: string,
-  description: string,
-  questions: Question[],
-  createdAt: string,
-  __v?: number
-
-}
+import { useNavigate } from 'react-router-dom'
+import ButtonGlass from '../components/ButtonGlass'
 
 export default function Category() {
 
-  const [data, setData] = useState<Quiz[] | null>(null)
-  const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState<boolean>(true)
+  const levels = ["Easy", "Medium", "Hard"]
+  const length = {5: 'Short', 10: 'Default', 15: 'Long'}
 
-  //const navigate = useNavigate()
+  const [topic, setTopic] = useState<string | null>("Jurrasic Park")
+  const [difficulty, setDifficulty] = useState<string>("Medium")
+  const [difficultyValue, setDifficultyValue] = useState<number>(1)
+  const [quizLength, setQuizLength] = useState<number>(5)
 
-  useEffect(() => {
-    const getQuizes = async () => {
-      try {
-        const response = await axios.get<Quiz[]>("/api/getAllQuizzes")
-        setData(response.data)
-        setLoading(false)
-      } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message)
-        } else {
-          setError("An Unknown Error Occured")
-        }
-        setLoading(false)
-      }
-    }
-    getQuizes()
-  }, [])
+  const navigate = useNavigate()
 
-  if (loading) return <p>Loading...</p>
-  if (error) return <p>Error: {error}</p>
+  const handleSubmit = () =>  {
+    navigate('/quiz', {state:{topic: topic, quizLength: quizLength, difficulty: difficulty}})
+  } 
+
+  const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTopic(event.target.value);
+  }
+
+  const handleDifficultyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = parseInt(event.target.value)
+    setDifficultyValue(newValue)
+    setDifficulty(levels[newValue])
+  }
 
   return (
     <div className='bg-image flex flex-col items-center justify-center'>
-      <Container className='flex flex-col items-center mx-8 gap-y-6'>
+      <Container className='flex flex-col items-center mx-8 gap-y-4'>
         <LogoMain cstyles='h-32 md:h-44' />
-        <div className='grid grid-cols-2 gap-4 mb-8 md:grid-cols-4 md:gap-4 md:content-center'>
-          {data?.map((quiz, index) => (
-            <CategoryButton key={quiz._id} qid={quiz._id} catno={index.toString()} />
-          ))}
-        </div>
+          <input 
+          type='text'
+          placeholder="Jurrasic Park"
+          onChange={handleTextChange}
+          className='bg-white p-2 rounded-xl '
+          />
+        <div id='difficulty-slider'>
+          <input
+            type='range'
+            min='0'
+            max='2'
+            step='1'
+            value={difficultyValue}
+            onChange={handleDifficultyChange}
+            className="styled-slider w-full"
+          />
+          <div className="flex justify-between text-sm font-medium px-1">
+            {levels.map((label, idx) => (
+              <span key={label} className={difficultyValue === idx ? "text-white" : "text-gray-500"}>
+                {label}
+              </span>
+            ))}
+          </div>
+          </div>
+          <div id='length-slider'>
+            <input
+            type='range'
+            min='5'
+            max='15'
+            step='5'
+            value={quizLength}
+            onChange={(e) => setQuizLength(parseInt(e.target.value))}
+            className="styled-slider w-full"
+          />
+          <div className="flex justify-between text-sm font-medium px-1">
+            {Object.entries(length).map(([value, label]) => (
+              <span key={value} className={parseInt(value) === quizLength ? "text-white" : "text-gray-500"}>
+                {label}
+                </span>
+              ))}
+            </div>
+          </div>
+          <ButtonGlass onClick={handleSubmit}>Generate Quiz</ButtonGlass>
       </Container>
     </div>
   )
