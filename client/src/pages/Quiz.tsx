@@ -9,6 +9,8 @@ import NextButtonImg from '../assets/NextButton.svg'
 import LogoBig from '../components/LogoBig';
 import Container from '../components/Container';
 import ButtonGlass from '../components/ButtonGlass';
+import LogoMain from '../components/LogoMain'
+import LoadingBar from '../components/LoadingBar';
 
 interface Option {
   oid: string;
@@ -29,6 +31,11 @@ interface Answer {
   oid: string;
 }
 
+interface Explanations {
+  qid: string;
+  explanation_text: string;
+}
+
 interface Quiz {
   _id: string;
   title: string;
@@ -36,20 +43,27 @@ interface Quiz {
   questions: Question[];
   answers: Answer[];
   createdAt: string;
+  explanations: Explanations[];
   __v?: number;
+}
+
+interface Res {
+  quizdata: Quiz
+  id: string
 }
 
 export default function Quiz() {
 
   const { state } = useLocation()
+  //const state = "dummy_state"
 
-  const [data, setData] = useState<Quiz | null>(null);
+  //const [data, setData] = useState<Quiz | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [index, setIndex] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [currentSelected, setCurrentSelected] = useState<string | null>(null);
-  const [quizID] = useState<string | null>(state.id)
+  const [quizID, setQuizID] = useState<string | null>(null)
   const location = useLocation();
 
   const navigate = useNavigate()
@@ -57,9 +71,12 @@ export default function Quiz() {
   useEffect(() => {
     const getQuiz = async () => {
       try {
-        const response = await axios.post<Quiz>('/api/getQuiz', { quizId: quizID });
-        setData(response.data);
-        setQuestions(response.data.questions);
+        const response = await axios.post<Res>('/api/generateQuiz', { topic: state.topic, quizLength: state.quizLength, difficulty: state.difficulty }); ///api/getQuiz { quizId: quizID }
+        const { quizdata, id } = response.data;
+
+        //setData(quizdata);
+        setQuestions(quizdata.questions);
+        setQuizID(id);
         setLoading(false);
       } catch (error) {
         if (error instanceof Error) {
@@ -103,7 +120,7 @@ export default function Quiz() {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('/api/check', { 'option': currentSelected, 'quizId': data?._id, 'index': index })
+      const response = await axios.post('/api/check', { 'option': currentSelected, 'quizId': quizID, 'index': index })
       if (response.data.message == "correct") {
         // Mark the current question as submitted
         // Ensure currentQuestion is not null before setting it
@@ -135,7 +152,15 @@ export default function Quiz() {
     }
   }
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return (
+    <div className='bg-image flex flex-col items-center justify-center'>
+      <Container className='flex flex-col items-center mx-8 gap-y-4'>
+        <LogoMain cstyles='h-32 md:h-44' />
+          <LoadingBar></LoadingBar>
+          <h2 className='text-white text-lg'>Letting AI build your quiz — hang tight!</h2>
+        </Container>
+      </div>
+  )
   if (error) return <p>Error: {error}</p>;
 
   return (
