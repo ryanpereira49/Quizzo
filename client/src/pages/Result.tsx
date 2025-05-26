@@ -26,7 +26,8 @@ export default function Result() {
     const navigate = useNavigate()
 
     const handleSubmit = () => {
-        if (score > 1) {
+        const thirty_percent = total * 0.30;
+        if (score > thirty_percent) {
             setResult(true)
         }
         setShowScore(true)
