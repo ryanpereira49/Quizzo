@@ -35,6 +35,17 @@ const AnswerSchema = new Schema({
   }
 });
 
+const ExplanationSchema = new Schema({
+  qid: {
+    type: String,
+    required: true
+  },
+  explanation_text: {
+    type: String,
+    required: true
+  }
+});
+
 const QuizSchema = new Schema({
   title: {
     type: String,
@@ -45,7 +56,8 @@ const QuizSchema = new Schema({
     required: true
   },
   questions: [QuestionSchema],
-  answers: [AnswerSchema]
+  answers: [AnswerSchema],
+  explanations: [ExplanationSchema]
 });
 
 module.exports = mongoose.model('Quiz', QuizSchema);
