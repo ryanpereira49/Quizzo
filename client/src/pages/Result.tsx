@@ -19,7 +19,7 @@ export default function Result() {
 
     const { state } = useLocation()
 
-    const { score, total, quizId }: ResultState = state
+    const { score, total }: ResultState = state
     const [showScore, setShowScore] = useState<boolean>(false)
     const [result, setResult] = useState<boolean>(false)
 
@@ -54,7 +54,7 @@ export default function Result() {
                                 <ProgressBarCircle score={score} maxScore={total}/>
                                 <p className='text-white text-2xl font-bold'>Sorry!</p>
                                 <p className='text-white'>You failed the quiz!</p>
-                                <ButtonGlass onClick={() => { navigate('/quiz',{state:{id:quizId}})} }>Try Again</ButtonGlass>
+                                <ButtonGlass onClick={() => { navigate('/category') }}>Home</ButtonGlass>
                             </ContainerRed>
                         )
                     ):
