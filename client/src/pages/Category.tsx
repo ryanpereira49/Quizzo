@@ -38,7 +38,7 @@ export default function Category() {
         <LogoMain cstyles='h-32 md:h-44' />
           <input 
           type='text'
-          placeholder="Jurrasic Park"
+          placeholder="Enter a topic"
           onChange={handleTextChange}
           className='bg-white p-2 rounded-xl '
           />
